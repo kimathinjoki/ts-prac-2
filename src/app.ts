@@ -39,6 +39,8 @@ import { Payment } from './classes/payment.js';
 
 import { HasFormatter } from './interfaces/HasFormatter.js';
 
+import { ListTemplate } from './classes/ListTemplates.js';
+
 
 let docOne: HasFormatter;
 let docTwo: HasFormatter
@@ -84,6 +86,14 @@ const type = document.querySelector('#type') as HTMLSelectElement;
  const details = document.querySelector('#details') as HTMLInputElement;
  const amount = document.querySelector('#amount') as HTMLInputElement;
 
+
+
+
+//    list template instance
+
+const ul =document.querySelector('ul')!;
+const list =  new ListTemplate(ul)
+
 form.addEventListener('submit', (e: Event)=>{
     e.preventDefault()
 
@@ -101,5 +111,63 @@ form.addEventListener('submit', (e: Event)=>{
         toFrom.value,
         details.value,
         amount.valueAsNumber
+    
     )
+
+
+    list.render(doc, type.value, "end" )
+
+
 })
+
+
+//  generic
+
+
+const addUid = <T extends object >(obj: T) => {
+    let uid = Math.floor(Math.random()*100);
+    return {...obj, uid}
+}
+
+
+let docO = addUid({name: "yosgu", age: 56})
+
+console.log(docO)
+
+
+// with interface
+
+
+interface Resource<T> {
+    uid: number;
+    resourceName: string;
+    data: T
+}
+
+
+const docThree: Resource<object> = {
+    uid: 1,
+    resourceName: 'personA',
+    data: {name: 'oedfv'}
+}
+
+console.log(docThree)
+
+
+const docFour: Resource <string[]> ={
+    uid: 2,
+    resourceName: 'shopping list',
+    data: ['bread', 'milk', 'butter', 'juice']
+}
+
+
+console.log(docFour)
+
+
+
+//  in a tupple, you can't change the type once the position is locked/defined unlike in an array
+
+let tup: [string, number, boolean] =  ['ryu',45,true]
+
+//  in an array you can change between different types
+
