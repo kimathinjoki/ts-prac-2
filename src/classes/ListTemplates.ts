@@ -10,7 +10,7 @@ export class ListTemplate {
     ){}
 
 
-    render(item: HasFormatter, heading: string, pos: "start" | " end"){
+    render(item: HasFormatter, heading: string, pos: "start" | "end"){
         const li = document.createElement("li");
 
         const h4 = document.createElement("h4");
@@ -21,6 +21,12 @@ export class ListTemplate {
         const p = document.createElement("p");
         p.innerText = item.format()
 
-        li.append(p)
+        li.append(p);
+
+        if(pos === "start"){
+            this.container.prepend(li)
+        }else{
+            this.container.append(li)
+        }
     }
 }
